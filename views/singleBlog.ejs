@@ -1,0 +1,59 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <title>Home Page</title>
+    <%- include('./partials/head') %>
+</head>
+
+<body>
+    <%- include('./partials/navbar') %>
+
+    <% if (locals.error) { %>
+        <div class="alert alert-danger" role="alert">
+            This is a primary alert—check it out!
+        </div>
+    <% } else { %>
+        <div class="container mt-5">
+            <div class="row justify-content-center">
+                <div class="col-md-8">
+                    <div class="card mb-4">
+                        <img src="<%= locals.blog.coverImageUrl %>" class="card-img-top" alt="<%= locals.blog.title %>" />
+                        <div class="card-body">
+                            <h5 class="card-title"><%= locals.blog.title %></h5>
+                            <pre class="card-text"><%= locals.blog.body %></pre>
+                            <div class="d-flex align-items-center mt-4">
+                                <img src="<%= locals.blog.generatedBy.profilePictureURL %>" class="rounded-circle border" width="50" alt="Profile Picture">
+                                <span class="ms-3">Published by <%= locals.blog.generatedBy.fullName %></span>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="comment-section border-top pt-3">
+                        <h3>Comments (<%= locals.comments.length %>)</h3>
+                        <% locals.comments.forEach(comment => { %>
+                            <div class="d-flex align-items-center mt-4">
+                                <img src="<%= comment.generatedBy.profilePictureURL %>" class="rounded-circle border" width="50" alt="Profile Picture">
+                                <span class="ms-3"><%= comment.generatedBy.fullName %></span>
+                            </div>
+                            <div class="comment border-bottom pb-2 mb-2"><%= comment.content %></div>
+                        <% }) %>
+                        <% if (locals.user) { %>
+                            <form method="post" action="/blogs/comment/<%= locals.blog._id %>">
+                                <div class="input-group comment-input mb-3">
+                                    <input type="text" class="form-control" id="commentInput" name="content" placeholder="Add a comment..." required>
+                                    <div class="input-group-append">
+                                        <button class="btn btn-primary" type="submit">Add</button>
+                                    </div>
+                                </div>
+                            </form>
+                        <% } %>
+                    </div>
+                </div>
+            </div>
+        </div>
+    <% } %>
+
+    <%- include('./partials/script') %>
+</body>
+
+</html>
