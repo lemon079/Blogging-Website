@@ -1,5 +1,5 @@
 import jwt from "jsonwebtoken";
-const secret_key = "2$s*fq124$k9@das2@";
+const secret_key = process.env.SECRET_KEY;
 
 function createToken(user) {
   return jwt.sign({ user }, secret_key, { expiresIn: "1h" });
