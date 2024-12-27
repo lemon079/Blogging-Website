@@ -1,5 +1,5 @@
 import { Router } from "express";
-import { handleAddBlog } from "../controller/blog.js";
+import { handleCreateBlog } from "../controller/blog.js";
 import multer from "multer";
 import path from "path";
 
@@ -18,6 +18,6 @@ const storage = multer.diskStorage({
 
 const upload = multer({ storage: storage });
 
-router.post("/", upload.single("coverImage"), handleAddBlog);
+router.post("/", upload.single("coverImage"), handleCreateBlog);
 
 export default router;

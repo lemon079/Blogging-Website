@@ -3,17 +3,17 @@ import Blog from "../model/blog.js";
 import Comment from "../model/comment.js";
 const router = Router();
 
+router.get("/", async (req, res) => {
+  const ALL_BLOGS = await Blog.find({}).sort({ CreatedAt: "desc" });
 
-router.get("", async (req, res) => {
-  const ALL_BLOGS = await Blog.find({}).sort({ CreatedAt: -1 });
   return res.render("blog", {
     user: req.user,
     Blogs: ALL_BLOGS,
   });
 });
 
-router.get("/add", (req, res) => {
-  return res.render("addBlog", {
+router.get("/create", (req, res) => {
+  return res.render("createBlog", {
     user: req.user,
   });
 });

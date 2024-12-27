@@ -20,7 +20,7 @@ app.use(cookieParser());
 app.use(express.static(path.resolve("./public")));
 
 // connection
-mongoConnection(process.env.MONGO_URL)
+mongoConnection("mongodb://localhost/blogify")
   .then(() => console.log("Connected To MongoDB"))
   .catch(() => console.log("Error Connecting To MongoDB"));
 
@@ -33,4 +33,4 @@ app.use("/blogs", checkForAuthentication, blogRoutes);
 app.use("/auth", userRoutes);
 
 // server connection
-app.listen(process.env.PORT, () => console.log("Connnected To Server"));
+app.listen(3000, () => console.log("Connnected To Server"));

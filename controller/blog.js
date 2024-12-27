@@ -1,6 +1,6 @@
 import Blog from "../model/blog.js";
 
-async function handleAddBlog(req, res) {
+async function handleCreateBlog(req, res) {
   const { title, body } = req.body;
   await Blog.create({
     title,
@@ -11,4 +11,4 @@ async function handleAddBlog(req, res) {
   return res.redirect("/blogs");
 }
 
-export { handleAddBlog };
+export { handleCreateBlog };
