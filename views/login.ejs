@@ -23,17 +23,27 @@
             </div>
         <% } %>
         <h2 class="text-center">Login</h2>
-        <form action="/auth/Login" method="post">
+        <form action="/user/login" method="post">
+            <!-- Email -->
             <div class="mb-3">
                 <label for="email" class="form-label">Email Address</label>
                 <input type="email" class="form-control" name="email" id="email" required>
             </div>
+
+            <!-- Password -->
             <div class="mb-3">
                 <label for="password" class="form-label">Password</label>
                 <input type="password" class="form-control" name="password" id="password" required>
             </div>
-            <button type="submit" class="btn btn-primary w-100">Login</button> <!-- Full-width button -->
+            
+            <!-- Login Button -->
+            <button type="submit" class="btn btn-primary w-100">Login</button>
         </form>
+
+        <!-- Forgot Password & Sign Up Links -->
+        <div class="text-center mt-3">
+            <p>Don't have an account? <a href="/user/signup">Sign Up</a></p>
+        </div>
     </div>
     <%- include('./partials/script') %>
 </body>

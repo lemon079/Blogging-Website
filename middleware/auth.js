@@ -4,7 +4,7 @@ function checkForAuthentication(req, res, next) {
   const token = req.cookies.token;
   if (!token) return next();
   try {
-    const {user} = verifyToken(token);
+    const { user } = verifyToken(token);
     if (!user) return next();
     req.user = user;
     next();
@@ -13,8 +13,4 @@ function checkForAuthentication(req, res, next) {
   }
 }
 
-function checkForAuthorization(req, res, next) {
-  next();
-}
-
-export { checkForAuthentication, checkForAuthorization };
+export { checkForAuthentication };

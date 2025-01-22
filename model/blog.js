@@ -10,6 +10,10 @@ const blogSchema = new Schema(
       type: String,
       required: true,
     },
+    tags: {
+      type: [String],
+      default: [],
+    },
     coverImageUrl: {
       type: String,
       default: "./images/blog.jpg",

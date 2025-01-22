@@ -6,6 +6,11 @@ const userSchema = new Schema({
     type: String,
     required: true,
   },
+  username: {
+    type: String,
+    required: true,
+    unique: true,
+  },
   email: {
     type: String,
     required: true,
@@ -18,6 +23,10 @@ const userSchema = new Schema({
   profilePictureURL: {
     type: String,
     default: "/images/default.jpg",
+  },
+  bio: {
+    type: String,
+    default: "",
   },
   role: {
     type: String,
@@ -35,7 +44,7 @@ userSchema.pre("save", async function (next) {
 
 userSchema.static("matchPassword", async function (email, password) {
   const user = await User.findOne({ email });
-  if(!user) return;
+  if (!user) return;
   return await bcrypt.compare(password, user.password);
 });
 

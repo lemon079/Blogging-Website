@@ -2,12 +2,13 @@ import User from "../model/user.js";
 import { createToken } from "../utils/auth.js";
 
 async function handleUserSignUp(req, res) {
-  const { fullName, email, password } = req.body;
+  const { fullName, username, email, password } = req.body;
   try {
     const userExist = await User.findOne({ email });
     if (userExist) throw new Error("User Already Exists with this Email");
     const user = await User.create({
       fullName,
+      username,
       email,
       password,
       profilePictureURL:
@@ -15,7 +16,7 @@ async function handleUserSignUp(req, res) {
     });
 
     if (!user) throw new Error("Could not create User");
-    return res.redirect("/auth/login");
+    return res.redirect("/user/login");
   } catch (error) {
     return res.render("signup", {
       error,

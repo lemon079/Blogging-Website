@@ -6,6 +6,8 @@ import {
 } from "../controller/user.js";
 import multer from "multer";
 import path from "path";
+import { checkForAuthentication } from "../middleware/auth.js";
+import { getEditProfile, getUserProfile } from "./userStaticRoutes.js";
 const router = Router();
 
 router.get("/signup", (req, res) => {
@@ -32,5 +34,7 @@ const upload = multer({ storage: storage });
 router.post("/signup", upload.single("profilePicture"), handleUserSignUp);
 router.post("/login", handleUserLogin);
 router.get("/logout", handleUserLogout);
+router.get("/profile", checkForAuthentication, getUserProfile);
+router.get("/edit", checkForAuthentication, getEditProfile);
 
 export default router;

@@ -4,8 +4,7 @@ import Comment from "../model/comment.js";
 const router = Router();
 
 router.get("/", async (req, res) => {
-  const ALL_BLOGS = await Blog.find({}).sort({ CreatedAt: "desc" });
-
+  const ALL_BLOGS = await Blog.find({}).sort({ CreatedAt: "descending" });
   return res.render("blog", {
     user: req.user,
     Blogs: ALL_BLOGS,
@@ -32,6 +31,7 @@ router.get("/:id", async (req, res) => {
     });
   } catch (error) {
     return res.render("singleBlog", {
+      user: req.user,
       error,
     });
   }
@@ -46,7 +46,7 @@ router.post("/comment/:id", async (req, res) => {
     content: content,
     generatedBy: userId,
   });
-  return res.redirect(`/${blogId}`);
+  return res.redirect(`/blogs/${blogId}`);
 });
 
 export default router;
