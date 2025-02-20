@@ -17,13 +17,23 @@ router.get("/create", (req, res) => {
   });
 });
 
+router.get("/edit/:id", async (req, res) => {
+  const { id } = req.params;
+  const blog = await Blog.findById(id);
+
+  return res.render("editBlog", {
+    user: req.user,
+    blog: blog
+  });
+});
+
 router.get("/:id", async (req, res) => {
   const blogId = req.params.id;
   try {
     const blog = await Blog.findById({ _id: blogId }).populate("generatedBy");
-    const ALL_COMMENTS = await Comment.find({ blogId: blogId }).populate(
-      "generatedBy"
-    );
+    const ALL_COMMENTS = await Comment.find({ blogId: blogId })
+      .populate("generatedBy")
+      .sort({ CreatedAt: "desc" });
     return res.render("singleBlog", {
       user: req.user,
       blog,

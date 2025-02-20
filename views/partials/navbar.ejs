@@ -15,23 +15,23 @@
                         <a class="nav-link" href="/blogs/create">Create Blog</a>
                     </li>
                     <li class="nav-item dropdown">
-                        <a class="nav-link dropdown-toggle" role="button" data-bs-toggle="dropdown"
+                        <a class="nav-link dropdown-toggle text-capitalize" role="button" data-bs-toggle="dropdown"
                             aria-expanded="false">
                             <%= user.fullName %>
                         </a>
                         <ul class="dropdown-menu">
-                            <li><a class="dropdown-item" href="/user/profile">Profile</a></li>
+                            <li><a class="dropdown-item" href="/user/profile/<%= user._id %>">Profile</a></li>
                             <li><a class="dropdown-item" href="/user/logout">Log out</a></li>
                         </ul>
                     </li>
-                    <% } else { %>
-                        <li class="nav-item">
-                            <a class="nav-link" href="/user/signup">Signup</a>
-                        </li>
-                        <li class="nav-item">
-                            <a class="nav-link" href="/user/login">Login</a>
-                        </li>
-                        <% } %>
+                <% } else { %>
+                    <li class="nav-item">
+                        <a class="nav-link" href="/user/signup">Signup</a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link" href="/user/login">Login</a>
+                    </li>
+                <% } %>
             </ul>
         </div>
     </div>

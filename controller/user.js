@@ -1,8 +1,9 @@
 import User from "../model/user.js";
 import { createToken } from "../utils/auth.js";
+import Blog from "../model/blog.js";
 
 async function handleUserSignUp(req, res) {
-  const { fullName, username, email, password } = req.body;
+  const { fullName, username, email, password, bio } = req.body;
   try {
     const userExist = await User.findOne({ email });
     if (userExist) throw new Error("User Already Exists with this Email");
@@ -11,6 +12,7 @@ async function handleUserSignUp(req, res) {
       username,
       email,
       password,
+      bio,
       profilePictureURL:
         req.file && `/uploads/profilePictures/${req.file.filename}`,
     });
@@ -46,4 +48,32 @@ function handleUserLogout(req, res) {
   return res.redirect("/blogs");
 }
 
-export { handleUserSignUp, handleUserLogin, handleUserLogout };
+async function handleDeleteAccount(req, res) {
+  try {
+    const userId = req.user._id;
+    await User.findByIdAndDelete(userId);
+    await Blog.deleteMany({ generatedBy: userId });
+    res.clearCookie("token");
+    return res.redirect("/blogs");
+  } catch (error) {
+    return res.status(500).json({ message: "Error deleting account" });
+  }
+}
+
+export const getUserProfile = async (req, res) => {
+  try {
+    const { id } = req.params;
+    const user = await User.findById(id);
+    const blogs = await Blog.find({ generatedBy: id });
+    res.render("profile", { user, blogs });
+  } catch (error) {
+    res.status(500).json({ message: "Error fetching user profile" });
+  }
+};
+
+export {
+  handleUserSignUp,
+  handleUserLogin,
+  handleUserLogout,
+  handleDeleteAccount,
+};

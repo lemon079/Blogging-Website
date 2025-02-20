@@ -3,6 +3,7 @@ import {
   handleUserSignUp,
   handleUserLogin,
   handleUserLogout,
+  handleDeleteAccount,
 } from "../controller/user.js";
 import multer from "multer";
 import path from "path";
@@ -34,7 +35,8 @@ const upload = multer({ storage: storage });
 router.post("/signup", upload.single("profilePicture"), handleUserSignUp);
 router.post("/login", handleUserLogin);
 router.get("/logout", handleUserLogout);
-router.get("/profile", checkForAuthentication, getUserProfile);
 router.get("/edit", checkForAuthentication, getEditProfile);
+router.get("/profile/:id", checkForAuthentication, getUserProfile);
+router.post("/delete", checkForAuthentication, handleDeleteAccount);
 
 export default router;

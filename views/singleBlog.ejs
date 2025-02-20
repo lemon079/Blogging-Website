@@ -31,7 +31,7 @@
                                     <div class="card-text lead text-muted mb-4" style="white-space: pre-wrap;"><%-
                                             locals.blog.body %></div>
                                     <div class="d-flex align-items-center border-top pt-3">
-                                        <img src="<%= locals.user.profilePictureURL %>"
+                                        <img src="<%= locals.blog.generatedBy.profilePictureURL %>"
                                             class="rounded-circle me-3 border border-dark" width="60" height="60"
                                             alt="Profile Picture">
                                         <div>
@@ -70,7 +70,6 @@
                                         </div>
                                         <hr>
                                         <% }) %>
-                                            <!-- Add a Comment -->
                                             <% if (locals.user) { %>
                                                 <form method="post" action="/blogs/comment/<%= locals.blog._id %>"
                                                     class="mt-3">

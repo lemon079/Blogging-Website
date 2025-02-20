@@ -4,7 +4,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Create Blog</title>
+    <title>Edit Blog</title>
     <%- include('./partials/head') %>
         <link href="https://cdn.jsdelivr.net/npm/quill@2.0.3/dist/quill.snow.css" rel="stylesheet">
         <style>
@@ -47,16 +47,16 @@
                     <span class="visually-hidden">Loading...</span>
                 </div>
             </div>
-            <h2 class="text-center mt-2">Create Blog</h2>
-            <form method="post" action="/blogs" enctype="multipart/form-data" id="blogForm">
+            <h2 class="text-center mt-2">Edit Blog</h2>
+            <form method="post" action="/blogs/edit/<%= blog._id %>" enctype="multipart/form-data" id="blogForm">
                 <div class="mb-3">
                     <label for="title" class="form-label">Title</label>
                     <input type="text" class="form-control font-italic" name="title" id="title"
-                        placeholder="Write a title..." required />
+                        placeholder="Write a title..." value="<%= blog.title %>" required />
                 </div>
                 <div class="mb-3">
                     <label for="body" class="form-label">Body</label>
-                    <div id="editor-container"></div>
+                    <div id="editor-container"><%= blog.body %></div>
                     <input type="hidden" name="body" id="hiddenBody" required>
                 </div>
                 <div class="mb-3">
@@ -66,7 +66,7 @@
                 <div class="d-flex gap-4 align-items-center">
                     <button type="button" class="btn btn-success d-none" id="paraphraseButton">Paraphrase</button>
                     <button type="button" class="btn btn-warning" id="generateButton">Generate Blog Content</button>
-                    <button type="submit" class="btn btn-primary">Add</button>
+                    <button type="submit" class="btn btn-primary">Update</button>
                 </div>
             </form>
         </div>
@@ -212,6 +212,9 @@
                 blogForm.addEventListener('submit', function (e) {
                     hiddenBody.value = quill.root.innerHTML;
                 });
+
+                // Set the initial content in the editor
+                quill.root.innerHTML = `<%- blog.body %>`;
             </script>
 </body>
 

@@ -43,4 +43,42 @@ async function handleGenerateContent(req, res) {
   }
 }
 
+export const handleDeleteBlog = async (req, res) => {
+  try {
+    const { id } = req.params;
+    await Blog.findByIdAndDelete(id);
+    return res.redirect(`/user/profile/${req.user._id}`);
+  } catch (error) {
+    res.status(500).json({ message: "Error deleting blog" });
+  }
+};
+
+export const getEditBlogPage = async (req, res) => {
+  try {
+    const { id } = req.params;
+    const blog = await Blog.findById(id);
+    res.render("createBlog", { blog });
+  } catch (error) {
+    res.status(500).json({ message: "Error fetching blog for editing" });
+  }
+};
+
+export const handleEditBlog = async (req, res) => {
+  try {
+    const { id } = req.params;
+    const { title, body } = req.body;
+    const updateData = {
+      title,
+      body,
+    };
+    if (req.file) {
+      updateData.coverImageUrl = `/uploads/${req.file.filename}`;
+    }
+    await Blog.findByIdAndUpdate(id, updateData);
+    return res.redirect(`/blogs/${id}`);
+  } catch (error) {
+    res.status(500).json({ message: "Error editing blog" });
+  }
+};
+
 export { handleCreateBlog, handleParaphrase, handleGenerateContent };
